@@ -270,6 +270,14 @@ $userName =  \Yii::$app->user->id ? $user->getName() : '';
 </span>
                     </a>
                 </li>
+                <li class="<?= \Yii::$app->controller->action->id == 'playbook' ? 'active' : '' ?>">
+                    <a href="<?= Url::to('@web/playbook/') ?>">
+                        <i class=" icon-eye-open"></i>
+                        <span class="menu-text">
+                            <?= yii::t('w', 'menu playbook') ?>
+</span>
+                    </a>
+                </li>
             </ul><!-- /.nav-list -->
             <div class="sidebar-collapse" id="sidebar-collapse">
                 <i class="icon-double-angle-right" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>

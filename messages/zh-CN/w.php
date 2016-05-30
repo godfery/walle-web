@@ -77,4 +77,21 @@ return [
     'option' => '操作',
     'btn sure' => '确认',
     'btn cancel' => '取消',
+		
+		
+	'menu playbook' => 'playbook 脚本',
+		
+		'custom_order'=>'自定义命令',
+		'stop_server_mysql'=>'stop_server_mysql',
+		'running_server_mysql'=>'running_server_mysql',
+		'running_httpurl'=>'运行http url ',
+		'version'=>'版本号',
+		'playbook tip'=>'请输入 相关内容',
+		'name'=>'playbook 名字',
+		'write to conf'=>'生成配置文件',
+		''=>'',
+		''=>'',
+		
+		
+		
 ];
