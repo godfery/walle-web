@@ -11,6 +11,7 @@ use app\models\User;
 use app\models\Group;
 use app\components\GlobalHelper;
 use app\components\Command;
+// use Qutee\Task;
 
 class PlaybookController extends Controller
 {
@@ -150,11 +151,82 @@ EOF;
 		fclose($fp);
 		$command = new	Command(array("a"=>1));
 		$command ->runLocalCommand("cp -rf /www/walle/walle-web/runtime/update.conf /www/self/交接/joyfort--运维相关文档及操作/autoSprite/trunk/auto_script/");
-// 		exec("",$out,$status);
+// 		
 		
-		$command ->runLocalCommand("sh svn_update.sh");
+// 		
 		
 		
+	}
+	public  function  actionGenYml($projectId) {
+	
+		echo __DIR__;
+	
+		$project = $this->findModel($projectId);
+	
+	
+		$fp = fopen('/www/walle/walle-web/runtime/cod171.yaml', 'w+');
+	
+		fwrite($fp, "");
+	
+		$httpurl_status = 1;
+		if(empty($project->running_httpurl)) {
+			$httpurl_status = 0;
+		}
+	
+		$content = <<<EOF
+---
+- hosts: cod18-4
+  remote_user: root
+  become: yes
+  become_method: su
+   
+  vars:
+      username: fsdf
+      PASSWPRD: 2323 
+  tasks:
+   
+   
+   - name: (first)self update
+     shell: sh /home/autoSprite/trunk/auto_script/selfupdate.sh  >>/home/1.log 2>&1
+     ignore_errors: yes
+
+   - name: stop tomcat
+     shell: sh /home/autoSprite/trunk/auto_script/shutdown.sh  >>/home/1.log 2>&1
+     ignore_errors: yes
+   - name: update the gwar
+     shell: sh /home/autoSprite/trunk/auto_script/svn.sh  >>/home/1.log 2>&1
+     ignore_errors: yes
+   - name: call the mysql code
+     shell: sh /home/autoSprite/trunk/auto_script/mysql.sh  >>/home/1.log 2>&1
+     
+   - name: start tomcat 
+     shell: sh /home/autoSprite/trunk/auto_script/start.sh  >>/home/1.log 2>&1
+     ignore_errors: yes
+     # become: yes
+     # become_method: sudo
+
+
+   - name: call http url
+     shell: sh /home/autoSprite/trunk/auto_script/http.sh  >>/home/1.log 2>&1
+   - name: stop tomcat
+     shell: sh /home/autoSprite/trunk/auto_script/shutdown.sh  >>/home/1.log 2>&1
+     ignore_errors: yes
+
+   - name: start tomcat 
+     shell: sh /home/autoSprite/trunk/auto_script/start.sh  >>/home/1.log 2>&1
+     ignore_errors: yes
+	
+EOF;
+	
+	fwrite($fp, $content);
+	fclose($fp);
+	$command = new	Command(array("a"=>1));
+	$command ->runLocalCommand("cp -rf /www/walle/walle-web/runtime/update.conf /www/self/交接/joyfort--运维相关文档及操作/autoSprite/trunk/auto_script/");
+//
+	
+	//
+	
+	
 	}
     /**
      * 简化

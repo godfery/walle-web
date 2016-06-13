@@ -2,7 +2,7 @@
 /**
  * @var yii\web\View $this
  */
-$this->title = yii::t('conf', 'index');
+$this->title = yii::t('conf', 'new host');
 use yii\helpers\Url;
 ?>
 <div class="box">
@@ -22,48 +22,43 @@ use yii\helpers\Url;
                 </div>
             </div>
         </form>
-        <a class="btn btn-default btn-sm" href="<?= Url::to('@web/playbook/edit') ?>">
+        <a class="btn btn-default btn-sm" href="<?= Url::to('@web/hosts/edit') ?>">
             <i class="icon-pencil align-top bigger-125"></i>
-            <?= yii::t('conf', 'new playbook') ?>
+            <?= yii::t('conf', 'new host') ?>
         </a>
     </div><!-- /.box-header -->
     <div class="box-body table-responsive no-padding clearfix">
         <table class="table table-striped table-bordered table-hover">
             <tbody><tr>
-                <th>playbook剧本</th>
-                <th>自定义脚本</th>
-                <th>停服执行的mysql</th>
-                <th>开服执行的mysql</th>
-                <th>开服httpurl</th>
-                <th>svn 版本号</th>
-                <th><?= yii::t('conf', 'p_status') ?></th>
+                <th>主机名</th>
+                <th>描述</th>
+                <th>时间</th>
+                
+                
                 <th><?= yii::t('conf', 'p_opera') ?></th>
             </tr>
             <?php foreach ($list as $item) { ?>
                 <tr>
-                    <td><?= $item['name'] ?></td>
-                    <td><?= $item['custom_order'] ?></td>
-                    <td><?= $item['stop_server_mysql'] ?></td>
-                    <td><?= $item['running_server_mysql'] ?></td>
-                    <td><?= $item['running_httpurl'] ?></td>
-                    <td><?= $item['version'] ?></td>
-                    <td><?= $item['status'] ?></td>
+                    <td><?= $item['host'] ?></td>
+                    <td><?= $item['description'] ?></td>
+                    <td><?= date("Y-m-d H:i:s",$item['log_time']) ?></td>
                     
                     
-                    <td class="<?= \Yii::t('w', 'conf_status_' . $item['status'] . '_color') ?>">
+                    
+                   <td>
                         <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
                             
                            
-                            <a href="<?= Url::to("@web/playbook/edit?projectId={$item['id']}") ?>">
+                            <a href="<?= Url::to("@web/hosts/edit?projectId={$item['host']}") ?>">
                                 <i class="icon-pencil bigger-130"></i>
                                 <?= yii::t('conf', 'p_edit') ?>
                             </a>
-                            <a class="red btn-delete" data-id="<?= $item['id'] ?>" href="javascript:;">
+                            <a class="red btn-delete" data-id="<?= $item['host'] ?>" href="javascript:;">
                                 <i class="icon-trash bigger-130"></i>
                                 <?= yii::t('conf', 'p_delete') ?>
                             </a>
                            
-                            <a class="red toconf" data-id="<?= $item['id'] ?>" href="javascript:;">
+                            <a class="red toconf" data-id="<?= $item['host'] ?>" href="javascript:;">
                                 <i class="icon-trash bigger-130"></i>
                                 <?= yii::t('w', 'write to conf') ?>
                             </a>
@@ -86,7 +81,7 @@ use yii\helpers\Url;
         $('.btn-delete').click(function(e) {
             $this = $(this);
             if (confirm('<?= yii::t('conf', 'js delete project') ?>')) {
-                $.get('<?= Url::to('@web/playbook/delete') ?>', {projectId: $this.data('id')}, function(o) {
+                $.get('<?= Url::to('@web/hosts/delete') ?>', {projectId: $this.data('id')}, function(o) {
                     if (!o.code) {
                         $this.closest("tr").remove();
                     } else {
@@ -98,12 +93,12 @@ use yii\helpers\Url;
          $('.toconf').click(function(e) {
             $this = $(this);
             if (confirm('<?= yii::t('w', 'write to conf') ?>')) {
-                $.get('<?= Url::to('@web/playbook/toconf') ?>', {projectId: $this.data('id')}, function(o) {
+                $.get('<?= Url::to('@web/hosts/toconf') ?>', {projectId: $this.data('id')}, function(o) {
                     if (!o.code) {
 //                         $this.closest("tr").remove();
                     	alert('success' + o.msg);
                     } else {
-                        alert('<?= yii::t('w', 'js delete failed') ?>' + o.msg);
+                        alert('<?= yii::t('w', '生成文件失败') ?>' + o.msg);
                     }
                 })
             }

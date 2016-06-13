@@ -21,4 +21,9 @@ return [
     'mail-suffix' => [
         '*', # 支持多个
     ],
+
+	'playbook.yaml.template.dir'=>'/www/walle/walle-web/runtime/',
+	'playbook.yaml.template.filename'=>'cod.template.yaml',
+	
+		
 ];
